@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">2048</h1>
+
+        <div class="menu-screen active">
+            <button class="menu-btn" onclick="showPlayOptions()">PLAY</button>
+            <button class="menu-btn" onclick="showSettings()">SETTINGS</button>
+        </div>
+
+        <div class="mode-select">
+            <h2>Chọn chế độ chơi</h2>
+            <button class="mode-btn" onclick="startSinglePlayer()">Play Alone</button>
+            <button class="mode-btn" onclick="showVSOptions()">Play with Computer</button>
+            <button class="back-btn" onclick="showMenu()">Back</button>
+        </div>
+
+        <div class="settings-screen">
+            <h2>Settings</h2>
+            <div class="grid-size-selector">
+                <label>
+                    <input type="radio" name="gridSize" value="3"> 
+                    3x3 (Dễ)
+                </label>
+                <label>
+                    <input type="radio" name="gridSize" value="4" checked> 
+                    4x4 (Tiêu chuẩn)
+                </label>
+                <label>
+                    <input type="radio" name="gridSize" value="5"> 
+                    5x5 (Khó)
+                </label>
+            </div>
+            <button class="settings-btn" onclick="saveSettings()">Save</button>
+            <button class="back-btn" onclick="showMenu()">Back</button>
+        </div>
+
+        <div class="vs-screen">
+            <h2>Play with Computer</h2>
+            <div class="difficulty-selector">
+                <label>Độ khó: 
+                    <select id="difficulty">
+                        <option value="easy">Dễ</option>
+                        <option value="medium" selected>Vừa</option>
+                        <option value="hard">Khó</option>
+                    </select>
+                </label>
+            </div>
+            <div class="time-selector">
+                <label>Thời gian: 
+                    <select id="timeLimit">
+                        <option value="60">1 phút</option>
+                        <option value="120" selected>2 phút</option>
+                        <option value="180">3 phút</option>
+                        <option value="300">5 phút</option>
+                    </select>
+                </label>
+            </div>
+            <button class="mode-btn" onclick="startVSMode()">Bắt đầu thi đấu</button>
+            <button class="back-btn" onclick="showPlayOptions()">Back</button>
+        </div>
+
+        <div class="game-screen">
+            <div class="timer" id="gameTimer" style="display: none;"></div>
+            
+            <div id="singlePlayerGame" style="display: none;">
+                <div class="score-board">
+                    <div class="score-item">Score: <span id="score">0</span></div>
+                    <div class="score-item">Best: <span id="best">0</span></div>
+                </div>
+                <div class="game-board" id="gameBoard"></div>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="undoMove()">Undo</button>
+                    <button class="game-btn" onclick="getHint()">Hint</button>
+                    <button class="game-btn" onclick="restartGame()">Restart</button>
+                    <button class="back-btn" onclick="showPlayOptions()">Back</button>
+                </div>
+                <div id="hintDisplay"></div>
+            </div>
+
+            <div id="vsGame" style="display: none;">
+                <div class="vs-container">
+                    <div class="player-section">
+                        <div class="player-title human-player">BẠN</div>
+                        <div class="score-board">
+                            <div class="score-item">Score: <span id="humanScore">0</span></div>
+                        </div>
+                        <div class="game-board" id="humanBoard"></div>
+                    </div>
+                    <div class="player-section">
+                        <div class="player-title ai-player">MÁY</div>
+                        <div class="score-board">
+                            <div class="score-item">Score: <span id="aiScore">0</span></div>
+                        </div>
+                        <div class="game-board" id="aiBoard"></div>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button class="back-btn" onclick="endVSMode()">Kết thúc</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="winner-announcement" id="winnerAnnouncement">
+            <div id="winnerText"></div>
+            <button class="game-btn" onclick="hideWinner()" style="margin-top: 20px;">OK</button>
+        </div>
+
+        <div class="confirm-overlay" id="infoOverlay" style="display:none;">
+            <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+                <div class="confirm-title" id="infoTitle"></div>
+                <div class="confirm-body" id="infoBody"></div>
+                <div class="confirm-actions">
+                    <button class="confirm-btn cancel" id="infoOk">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirm-overlay" id="confirmOverlay">
+            <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+                <div class="confirm-title" id="confirmTitle">Kết thúc trận đấu</div>
+                <div class="confirm-body">Bạn có chắc muốn kết thúc trận đấu hiện tại không? Hành động này sẽ dừng đồng hồ và kết thúc trận.</div>
+                <div class="confirm-actions">
+                    <button class="confirm-btn cancel" id="confirmCancel">Huỷ</button>
+                    <button class="confirm-btn confirm" id="confirmEnd">Kết thúc</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
